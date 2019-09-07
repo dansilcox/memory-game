@@ -1,8 +1,10 @@
 {
   "name": "memory-game",
   "version": "0.0.0",
+  "main": "main.js",
   "scripts": {
     "ng": "ng",
+    "electron": "ng build --base-href ./ && electron .",	
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
@@ -28,10 +30,11 @@
     "@angular/cli": "~8.0.0",
     "@angular/compiler-cli": "~8.0.0",
     "@angular/language-service": "~8.0.0",
-    "@types/node": "~8.9.4",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
+    "@types/node": "~8.9.4",
     "codelyzer": "^5.0.0",
+    "electron": "^6.0.7",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.1.0",
