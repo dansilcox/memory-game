@@ -1,0 +1,7 @@
+export enum NumberStatus {
+  NOT_STARTED,
+  NUMBERS_VISIBLE,
+  SEQUENCE_OK_SO_FAR,
+  FAILED_LEVEL,
+  PASSED_LEVEL
+}

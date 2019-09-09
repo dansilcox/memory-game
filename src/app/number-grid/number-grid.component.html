@@ -1,0 +1,13 @@
+<div class="row" *ngFor="let row of numberGrid$ | async">
+  <div class="col mb-3" *ngFor="let col of row">
+    <div class="card">
+      <div class="card-body text-center">
+        <p *ngIf="!col.hidden"><strong>{{ col.value }}</strong></p>
+        <button *ngIf="col.hidden" type="button"
+          [disabled]="col.disabled"
+          (click)="trackSequence(col)"
+          class="btn btn-lg btn-block btn-primary">&nbsp;</button>
+      </div>
+    </div>
+  </div>
+</div>

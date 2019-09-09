@@ -1,0 +1,23 @@
+<div class="row" *ngIf="livesRemaining$ | async as livesRemaining">
+  <div class="col">
+
+  </div>
+
+  <div class="col">
+    <h1>{{ title }}</h1>
+  </div>
+
+  <div class="col text-right">
+      <ul class="list-unstyled mb-0">
+        <li>Level: {{ currentLevel$ | async }}</li>
+        <li>Lives: {{ livesRemaining }}</li>
+      </ul>
+    </div>
+</div>
+
+<div class="row">
+  <div class="col text-center">
+    <p>Time remaining: {{ (timeRemainingMs$ | async) / 1000 }} seconds</p>
+    <p *ngIf="message$ | async as message">{{ message }}</p>
+  </div>
+</div>
