@@ -8,7 +8,7 @@ import { UserLivesService } from './user-lives.service';
   providedIn: 'root'
 })
 export class NumbersService {
-  private readonly DEBUG_MODE = true;
+  private readonly DEBUG_MODE = false;
 
   private userSequence: NumberGridItem[];
   private correctSequence: NumberGridItem[];
