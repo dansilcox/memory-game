@@ -4,6 +4,7 @@ import { MessagesService } from '../messages.service';
 import { LevelConfigService } from '../level-config.service';
 import { UserLivesService } from '../user-lives.service';
 import { TimerService } from '../timer.service';
+import { Message } from '../message';
 
 @Component({
   selector: 'app-header',
@@ -19,7 +20,7 @@ export class HeaderComponent implements OnInit {
   livesRemaining$: Observable<number>;
   timeRemainingMs$: Observable<number>;
 
-  message$: Observable<string>;
+  message$: Observable<Message>;
   
   constructor(
     private _messages: MessagesService,

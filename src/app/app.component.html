@@ -5,12 +5,16 @@
 
   <p class="text-center" *ngIf="showRetryBtn"><button 
     type="button"
-    class="btn btn-large"
+    class="btn btn-large btn-secondary"
     (click)="startGame()">Retry</button></p>
+  <p class="text-center" *ngIf="showRestartBtn"><button 
+    type="button"
+    class="btn btn-large btn-danger"
+    (click)="restart()">Restart</button></p>
   <p class="text-center" *ngIf="showStartBtn"><button 
     type="button"
-    class="btn btn-large"
-    (click)="startGame()">Next level</button></p>
+    class="btn btn-large btn-success"
+    (click)="startGame(true)">Advance to level {{ nextLevel }}</button></p>
 </div>
 
 <app-start (modalClosed)="startGame()"></app-start>

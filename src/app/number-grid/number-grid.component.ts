@@ -9,6 +9,7 @@ import { NumberGridItem } from '../number-grid-item';
   styleUrls: ['./number-grid.component.scss']
 })
 export class NumberGridComponent implements OnInit {
+  DEBUG_MODE: boolean;
 
   numberGrid$: Observable<NumberGridItem[][]>;
 
@@ -16,10 +17,15 @@ export class NumberGridComponent implements OnInit {
 
   ngOnInit() {
     this.numberGrid$ = this._numbers.getRandomised()
+    this.DEBUG_MODE = this._numbers.debugEnabled();
   }
 
-  trackSequence(item: NumberGridItem): void {
+  trackSequence(item: NumberGridItem, event: any): void {
+    var target = event.target || event.srcElement || event.currentTarget;
+    // TODO: add class for success/fail so far to target
+    var idAttr = target.attributes.id;
+    console.log(idAttr);
     item.hidden = false;
-    this._numbers.trackSequence(item);
+    const successSoFar = this._numbers.trackSequence(item);
   }
 }

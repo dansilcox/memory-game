@@ -8,6 +8,8 @@ import { UserLivesService } from './user-lives.service';
   providedIn: 'root'
 })
 export class NumbersService {
+  private readonly DEBUG_MODE = true;
+
   private userSequence: NumberGridItem[];
   private correctSequence: NumberGridItem[];
   private numberGrid: NumberGridItem[][];
@@ -23,6 +25,8 @@ export class NumbersService {
     this.correctSequence = [];
     this.userSequence = [];
     this.numberGrid = [];
+    this.hideAll();
+    this.enableAll();
     this.status$.next(NumberStatus.NOT_STARTED);
   }
 
@@ -45,6 +49,10 @@ export class NumbersService {
 
   getRandomised(): Observable<NumberGridItem[][]> {
     return this.numberGrid$;
+  }
+
+  debugEnabled(): boolean {
+    return this.DEBUG_MODE;
   }
 
   showAll() {
@@ -73,19 +81,30 @@ export class NumbersService {
     this.numberGrid$.next(this.numberGrid);
   }
 
-  trackSequence(item: NumberGridItem): void {
+  trackSequence(item: NumberGridItem): boolean {
+    console.log(this.userSequence);
+    console.log(this.correctSequence);
     this.userSequence.push(item);
+    if (this.correctSequence.length < this.numberGrid.length) {
+      console.error('Hmm something weird going on...');
+      console.debug(this.correctSequence);
+      console.debug(this.numberGrid);
+      this.userSequence = [];
+      return false;
+    }
     if (this.userSequence.indexOf(item) !== this.correctSequence.indexOf(item)) {
       // mismatch
       this.status$.next(NumberStatus.FAILED_LEVEL);
-      return;
+      this.userSequence = [];
+      return false;
     }
     if (this.userSequence.length === this.correctSequence.length) {
       // at the end
       this.status$.next(NumberStatus.PASSED_LEVEL);
-      return;
+      return true;
     }
     this.status$.next(NumberStatus.SEQUENCE_OK_SO_FAR);
+    return true;
   }
   
   private chunkArray(myArray: NumberGridItem[], chunkSize: number): NumberGridItem[][] {

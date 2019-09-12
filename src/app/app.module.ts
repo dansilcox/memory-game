@@ -10,13 +10,15 @@ import { NumbersService } from './numbers.service';
 import { MessagesService } from './messages.service';
 import { UserLivesService } from './user-lives.service';
 import { NumberGridComponent } from './number-grid/number-grid.component';
+import { MessageTypeToClassPipe } from './message-type-to-class.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     StartComponent,
-    NumberGridComponent
+    NumberGridComponent,
+    MessageTypeToClassPipe
   ],
   imports: [
     BrowserModule,

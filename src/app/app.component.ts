@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TimerService } from './timer.service';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { LevelConfigService } from './level-config.service';
 import { LevelConfig } from './level-config';
 import { NumbersService } from './numbers.service';
@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { NumberStatus } from './number-status';
 import { UserLivesService } from './user-lives.service';
 import { MessagesService } from './messages.service';
+import { MessageType } from './message-type';
 
 @Component({
   selector: 'app-root',
@@ -18,10 +19,13 @@ export class AppComponent implements OnInit {
   title = 'Memory Game';
   showRetryBtn = false;
   showStartBtn = false;
+  showRestartBtn = false;
   
   private timeRemainingMs$: Observable<number>;
   private levelConfig: LevelConfig;
-  
+
+  nextLevel: number = 1;
+
   constructor(
     private _timer: TimerService,
     private _levels: LevelConfigService,
@@ -35,17 +39,27 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this._levels.getCurrentLevelConfig().pipe(
       map((level: LevelConfig) => {
-        console.log('Next level...');
-        console.log(level);
         this.levelConfig = level;
         this._numbers.reset();
+        this.showRetryBtn = false;
+        this.showStartBtn = false;
+        this.showRestartBtn = false;
+        this._numbers.showAll();
+        this._numbers.enableAll();
         this._numbers.randomise(this.levelConfig.getGridMinNumber(), this.levelConfig.getGridMaxNumber());
       })
     ).subscribe();
 
+    this._levels.getCurrentLevel().pipe(
+      tap((currentLevel: number) => {
+        this.nextLevel = currentLevel + 1;
+      })
+    ).subscribe();
     this.timeRemainingMs$ = this._timer.getTimeRemaining();
+
     this._numbers.getStatus().pipe(
       map((status: NumberStatus) => {
+        console.log('NumberStatus: ' + NumberStatus[status]);
         switch (status) {
           case NumberStatus.FAILED_LEVEL:
             this.failedLevel();
@@ -53,16 +67,30 @@ export class AppComponent implements OnInit {
           case NumberStatus.PASSED_LEVEL:
             this.passedLevel();
             break;
-          // ...
+          case NumberStatus.NOT_STARTED:
+          case NumberStatus.SEQUENCE_OK_SO_FAR:
+          case NumberStatus.NUMBERS_VISIBLE:
+            // do nothing, continue
+            break;
         }
         return status;
       })
     ).subscribe();
   }
 
-  startGame(): void {
+  startGame(increaseLevel: boolean = false): void {
+    this._messages.clear();
+    this.showRetryBtn = false;
+    this.showStartBtn = false;
+    this.showRestartBtn = false;
     this._numbers.showAll();
     this._numbers.enableAll();
+    if (increaseLevel) {
+      this._numbers.reset();
+      this._levels.nextLevel();
+    }
+
+    
     this._timer.start(this.levelConfig.getAllowedTimeMs());
     this.timeRemainingMs$.pipe(
       map((remainingMs: number) => {
@@ -73,18 +101,28 @@ export class AppComponent implements OnInit {
     ).subscribe();
   }
 
+  restart(): void {
+    // TODO: improve this
+    window.location.reload();
+  }
+  
   private passedLevel(): void {
-    console.info('PASSED!');
-    this._levels.nextLevel();
+    this._messages.send('Great job!', MessageType.SUCCESS);
     this.showStartBtn = true;
   }
 
   private failedLevel(): void {
-    console.error('Failed!');
     this._numbers.disableAll();
     this._lives.takeLife();
     const livesRemaining = this._lives.getNumLivesAsNumber();
-    this.showRetryBtn = true;
-    this._messages.send('Better luck next time - ' + livesRemaining + ' lives left')
+    if (livesRemaining > 0) {
+      this.showRetryBtn = true;
+    } else {
+      this.showRestartBtn = true;
+    }
+    this._messages.send(
+      'Better luck next time - ' + livesRemaining + ' lives left',
+      livesRemaining > 0 ? MessageType.WARNING : MessageType.FAILURE
+    );
   }
 }
