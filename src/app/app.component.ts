@@ -41,12 +41,10 @@ export class AppComponent implements OnInit {
       map((level: LevelConfig) => {
         this.levelConfig = level;
         this._numbers.reset();
+        this._numbers.randomise(this.levelConfig.getGridMinNumber(), this.levelConfig.getGridMaxNumber());
         this.showRetryBtn = false;
         this.showStartBtn = false;
         this.showRestartBtn = false;
-        this._numbers.showAll();
-        this._numbers.enableAll();
-        this._numbers.randomise(this.levelConfig.getGridMinNumber(), this.levelConfig.getGridMaxNumber());
       })
     ).subscribe();
 
@@ -78,23 +76,28 @@ export class AppComponent implements OnInit {
     ).subscribe();
   }
 
-  startGame(increaseLevel: boolean = false): void {
+  startGame(increaseLevel: boolean = false, randomiseNumbers = true): void {
+    console.log('Starting game, ' + (increaseLevel ? 'increasing level' : 'not increasing level'));
     this._messages.clear();
     this.showRetryBtn = false;
     this.showStartBtn = false;
     this.showRestartBtn = false;
-    this._numbers.showAll();
-    this._numbers.enableAll();
-    if (increaseLevel) {
-      this._numbers.reset();
-      this._levels.nextLevel();
+  
+    this._numbers.reset(randomiseNumbers);
+    if (randomiseNumbers || increaseLevel) {
+      this._numbers.randomise(this.levelConfig.getGridMinNumber(), this.levelConfig.getGridMaxNumber());
     }
 
-    
+    if (increaseLevel) {
+      this._levels.nextLevel();
+    }
+    this._numbers.showAll();
+
     this._timer.start(this.levelConfig.getAllowedTimeMs());
     this.timeRemainingMs$.pipe(
       map((remainingMs: number) => {
         if (remainingMs < 1) {
+          console.log('Time is up - hiding numbers!');
           this._numbers.hideAll();
         }
       })

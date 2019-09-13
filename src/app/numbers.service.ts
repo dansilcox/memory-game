@@ -8,7 +8,8 @@ import { UserLivesService } from './user-lives.service';
   providedIn: 'root'
 })
 export class NumbersService {
-  private readonly DEBUG_MODE = false;
+  // Cheat mode - doesn't hide the numbers :D
+  private readonly DEBUG_MODE = true;
 
   private userSequence: NumberGridItem[];
   private correctSequence: NumberGridItem[];
@@ -18,13 +19,15 @@ export class NumbersService {
   status$ = new BehaviorSubject<NumberStatus>(NumberStatus.NOT_STARTED);
 
   constructor() { 
-    this.reset();
   }
 
-  reset(): void {
-    this.correctSequence = [];
+  reset(clearNumberGrid = true): void {
     this.userSequence = [];
-    this.numberGrid = [];
+    if (clearNumberGrid) {
+      this.correctSequence = [];
+      this.numberGrid = [];
+      this.numberGrid$.next(this.numberGrid);
+    }
     this.hideAll();
     this.enableAll();
     this.status$.next(NumberStatus.NOT_STARTED);

@@ -25,15 +25,10 @@ const ALL_LEVELS = [
 })
 export class LevelConfigService {
   private allLevels = ALL_LEVELS;
-  private currentLevel$ = new BehaviorSubject<LevelConfig>(new LevelConfig(0));
-  private currentLevelIndex: number;
-  private currentLevelIndex$ = new BehaviorSubject<number>(0);
-
-  constructor() { 
-    this.currentLevelIndex = 0;
-    this.currentLevelIndex$.next(this.currentLevelIndex + 1);
-    this.setLevel();
-  }
+  // Start at level 1
+  private currentLevel$ = new BehaviorSubject<LevelConfig>(ALL_LEVELS[0]);
+  private currentLevelIndex = 1;
+  private currentLevelIndex$ = new BehaviorSubject<number>(1);
 
   getAllLevels(): Observable<LevelConfig[]> {
     return of(this.allLevels);
@@ -49,7 +44,7 @@ export class LevelConfigService {
 
   nextLevel(): void {
     this.currentLevelIndex++;
-    this.currentLevelIndex$.next(this.currentLevelIndex + 1);
+    this.currentLevelIndex$.next(this.currentLevelIndex);
     console.log('Start of level ' + (this.currentLevelIndex + 1));
     this.setLevel();
   }
