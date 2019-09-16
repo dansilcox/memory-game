@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { TimerService } from './timer.service';
+import { TimerService } from './services/timer.service';
 import { map, tap } from 'rxjs/operators';
-import { LevelConfigService } from './level-config.service';
+import { LevelConfigService } from './services/level-config.service';
 import { LevelConfig } from './level-config';
-import { NumbersService } from './numbers.service';
+import { NumbersService } from './services/numbers.service';
 import { Observable } from 'rxjs';
 import { NumberStatus } from './number-status';
-import { UserLivesService } from './user-lives.service';
-import { MessagesService } from './messages.service';
+import { UserLivesService } from './services/user-lives.service';
+import { MessagesService } from './services/messages.service';
 import { MessageType } from './message-type';
+import { ScoringService } from './services/scoring.service';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +24,7 @@ export class AppComponent implements OnInit {
   
   private timeRemainingMs$: Observable<number>;
   private levelConfig: LevelConfig;
+  private currentScore$: Observable<number>;
 
   nextLevel: number = 1;
 
@@ -31,7 +33,8 @@ export class AppComponent implements OnInit {
     private _levels: LevelConfigService,
     private _numbers: NumbersService,
     private _lives: UserLivesService,
-    private _messages: MessagesService
+    private _messages: MessagesService,
+    private _scores: ScoringService
   ) {
     this.levelConfig = new LevelConfig(0,1);
   }
@@ -54,6 +57,7 @@ export class AppComponent implements OnInit {
       })
     ).subscribe();
     this.timeRemainingMs$ = this._timer.getTimeRemaining();
+    this.currentScore$ = this._scores.getCurrentScore();
 
     this._numbers.getStatus().pipe(
       map((status: NumberStatus) => {
@@ -113,12 +117,16 @@ export class AppComponent implements OnInit {
     let msg = this.levelConfig.hasCustomAdvanceMessage() ?
       this.levelConfig.getCustomAdvanceMessage() :
       'Great job!';
+
     const bonusLives = this.levelConfig.getBonusLivesAwarded();
     if (bonusLives > 0) {
       this._lives.giveLives(bonusLives);
       const lifePlural = bonusLives === 1 ? 'life' : 'lives';
       msg += ' ' + bonusLives + ' bonus ' + lifePlural + ' awarded';
     }
+
+    this._scores.incrementScore(this.levelConfig.getLevelAdvanceScoreIncrement());
+    
     this._messages.send(msg, MessageType.SUCCESS);
     this.showStartBtn = true;
   }

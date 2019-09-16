@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LevelConfig } from './level-config';
+import { LevelConfig } from '../level-config';
 import { of, Observable, BehaviorSubject } from 'rxjs';
 
 const ALL_LEVELS = [

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
-import { NumberGridItem } from './number-grid-item';
-import { NumberStatus } from './number-status';
-import { UserLivesService } from './user-lives.service';
+import { NumberGridItem } from '../number-grid-item';
+import { NumberStatus } from '../number-status';
 
 @Injectable({
   providedIn: 'root'

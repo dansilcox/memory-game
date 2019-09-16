@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NumbersService } from '../numbers.service';
+import { NumbersService } from '../services/numbers.service';
 import { Observable } from 'rxjs';
 import { NumberGridItem } from '../number-grid-item';
 

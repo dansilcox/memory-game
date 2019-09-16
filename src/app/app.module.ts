@@ -4,13 +4,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { StartComponent } from './start/start.component';
-import { TimerService } from './timer.service';
-import { LevelConfigService } from './level-config.service';
-import { NumbersService } from './numbers.service';
-import { MessagesService } from './messages.service';
-import { UserLivesService } from './user-lives.service';
+import { TimerService } from './services/timer.service';
+import { LevelConfigService } from './services/level-config.service';
+import { NumbersService } from './services/numbers.service';
+import { MessagesService } from './services/messages.service';
+import { UserLivesService } from './services/user-lives.service';
 import { NumberGridComponent } from './number-grid/number-grid.component';
 import { MessageTypeToClassPipe } from './message-type-to-class.pipe';
+import { ScoringService } from './services/scoring.service';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { MessageTypeToClassPipe } from './message-type-to-class.pipe';
     LevelConfigService,
     NumbersService,
     MessagesService,
+    ScoringService,
     UserLivesService
   ],
   bootstrap: [AppComponent]

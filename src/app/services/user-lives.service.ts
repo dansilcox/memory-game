@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { MessagesService } from './messages.service';
-import { MessageType } from './message-type';
+import { MessageType } from '../message-type';
 
 const MAX_LIVES = 3;
 
