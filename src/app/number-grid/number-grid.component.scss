@@ -1,6 +1,10 @@
+$cardBackground: #56679f; 
+$cardForeground: #FFF;
+
 .card {
-  background: #56679f;
-  color: #FFF;
+  background: $cardBackground;
+  border: 1px solid $cardBackground;
+  color: $cardForeground;
   padding: 0;
   .card-body {
     padding: 0;
@@ -9,9 +13,9 @@
       padding: 0;
       button, strong {
         font-size: 3rem;
-        background: #56679F;
+        background: $cardBackground;
         border: none;
-        color: #FFF;
+        color: $cardForeground;
         height: 80px;
         margin: 0;
         display: inline-block;

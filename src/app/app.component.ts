@@ -110,16 +110,22 @@ export class AppComponent implements OnInit {
   }
   
   private passedLevel(): void {
-    const msg = this.levelConfig.hasCustomAdvanceMessage() ?
+    let msg = this.levelConfig.hasCustomAdvanceMessage() ?
       this.levelConfig.getCustomAdvanceMessage() :
       'Great job!';
+    const bonusLives = this.levelConfig.getBonusLivesAwarded();
+    if (bonusLives > 0) {
+      this._lives.giveLives(bonusLives);
+      const lifePlural = bonusLives === 1 ? 'life' : 'lives';
+      msg += ' ' + bonusLives + ' bonus ' + lifePlural + ' awarded';
+    }
     this._messages.send(msg, MessageType.SUCCESS);
     this.showStartBtn = true;
   }
 
   private failedLevel(): void {
     this._numbers.disableAll();
-    this._lives.takeLife();
+    this._lives.takeLives(1);
     const livesRemaining = this._lives.getNumLivesAsNumber();
     if (livesRemaining > 0) {
       this.showRetryBtn = true;

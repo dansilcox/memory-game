@@ -24,7 +24,12 @@ export class UserLivesService {
     return this.lives;
   }
 
-  takeLife(): void {
+  giveLives(numLives = 1): void {
+    this.lives++;
+    this.livesRemaining$.next(this.lives);
+  }
+
+  takeLives(numLives = 1): void {
     if (this.lives === 0) {
       this._messages.send('No more lives remaining', MessageType.WARNING);
       return;

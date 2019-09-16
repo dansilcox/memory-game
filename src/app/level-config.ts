@@ -6,12 +6,14 @@ export class LevelConfig {
    * @param gridMaxValue Maximum value in the grid (note: must be a square number)
    * @param gridMinValue Minimum value in the grid (typically 1)
    * @param customAdvanceMessage Custom message to be published as 'info' when advancing past this level
+   * @param bonusLivesAwarded Bonus lives awarded when advancing from this level (default 0)
    */
   constructor(
     private numbersVisibleTimeMs: number,
     private gridMaxValue: number,
     private gridMinValue = 1,
-    private customAdvanceMessage = ''
+    private customAdvanceMessage = '',
+    private bonusLivesAwarded: number = 0
   ) {
     if (!this.isSquareNumber(gridMaxValue)) {
       console.error('Error: gridMaxValue must be a square number');
@@ -37,6 +39,10 @@ export class LevelConfig {
 
   getCustomAdvanceMessage(): string {
     return this.customAdvanceMessage;
+  }
+
+  getBonusLivesAwarded(): number {
+    return this.bonusLivesAwarded;
   }
 
   /**

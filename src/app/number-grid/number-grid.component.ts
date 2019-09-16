@@ -21,11 +21,7 @@ export class NumberGridComponent implements OnInit {
   }
 
   trackSequence(item: NumberGridItem, event: any): void {
-    var target = event.target || event.srcElement || event.currentTarget;
-    // TODO: add class for success/fail so far to target
-    var idAttr = target.attributes.id;
-    console.log(idAttr);
     item.hidden = false;
-    const successSoFar = this._numbers.trackSequence(item);
+    this._numbers.trackSequence(item);
   }
 }
