@@ -3,21 +3,26 @@ import { LevelConfig } from './level-config';
 import { of, Observable, BehaviorSubject } from 'rxjs';
 
 const ALL_LEVELS = [
-  new LevelConfig(10000, 9, 1),
-  new LevelConfig(9000, 9, 1),
-  new LevelConfig(8000, 9, 1),
-  new LevelConfig(7000, 9, 1),
-  new LevelConfig(6000, 9, 1),
-  new LevelConfig(5000, 9, 1),
-  new LevelConfig(4000, 9, 1),
-  new LevelConfig(3000, 9, 1),
-  new LevelConfig(10000, 16, 1),
-  new LevelConfig(9000, 16, 1),
-  new LevelConfig(8000, 16, 1),
-  new LevelConfig(7000, 16, 1),
-  new LevelConfig(6000, 16, 1),
-  new LevelConfig(5000, 16, 1),
-  new LevelConfig(4000, 16, 1),
+  new LevelConfig(3000, 4),
+  new LevelConfig(2500, 4),
+  new LevelConfig(2000, 4),
+  new LevelConfig(1500, 4),
+  new LevelConfig(1000, 4, 1, "Wow, you're doing great! Time to size up the grid!"),
+  new LevelConfig(10000, 9),
+  new LevelConfig(9000, 9),
+  new LevelConfig(8000, 9),
+  new LevelConfig(7000, 9),
+  new LevelConfig(6000, 9),
+  new LevelConfig(5000, 9),
+  new LevelConfig(4000, 9),
+  new LevelConfig(3000, 9, 1, "You are on FIRE! Sizing up the grid again..."),
+  new LevelConfig(10000, 16),
+  new LevelConfig(9000, 16),
+  new LevelConfig(8000, 16),
+  new LevelConfig(7000, 16),
+  new LevelConfig(6000, 16),
+  new LevelConfig(5000, 16),
+  new LevelConfig(4000, 16),
 ];
 
 @Injectable({
@@ -34,11 +39,11 @@ export class LevelConfigService {
     return of(this.allLevels);
   }
 
-  getCurrentLevelConfig(): Observable<LevelConfig> {
+  getCurrentLevel(): Observable<LevelConfig> {
     return this.currentLevel$.asObservable();
   }
 
-  getCurrentLevel(): Observable<number> {
+  getCurrentLevelIndex(): Observable<number> {
     return this.currentLevelIndex$;
   }
 
@@ -46,10 +51,6 @@ export class LevelConfigService {
     this.currentLevelIndex++;
     this.currentLevelIndex$.next(this.currentLevelIndex);
     console.log('Start of level ' + (this.currentLevelIndex + 1));
-    this.setLevel();
-  }
-
-  private setLevel(): void {
     this.currentLevel$.next(this.allLevels[this.currentLevelIndex]);
   }
 }

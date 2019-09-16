@@ -33,11 +33,11 @@ export class AppComponent implements OnInit {
     private _lives: UserLivesService,
     private _messages: MessagesService
   ) {
-    this.levelConfig = new LevelConfig(0);
+    this.levelConfig = new LevelConfig(0,1);
   }
 
   ngOnInit() {
-    this._levels.getCurrentLevelConfig().pipe(
+    this._levels.getCurrentLevel().pipe(
       map((level: LevelConfig) => {
         this.levelConfig = level;
         this._numbers.reset();
@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
       })
     ).subscribe();
 
-    this._levels.getCurrentLevel().pipe(
+    this._levels.getCurrentLevelIndex().pipe(
       tap((currentLevel: number) => {
         this.nextLevel = currentLevel + 1;
       })
@@ -110,7 +110,10 @@ export class AppComponent implements OnInit {
   }
   
   private passedLevel(): void {
-    this._messages.send('Great job!', MessageType.SUCCESS);
+    const msg = this.levelConfig.hasCustomAdvanceMessage() ?
+      this.levelConfig.getCustomAdvanceMessage() :
+      'Great job!';
+    this._messages.send(msg, MessageType.SUCCESS);
     this.showStartBtn = true;
   }
 

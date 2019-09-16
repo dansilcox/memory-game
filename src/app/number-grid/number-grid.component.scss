@@ -1,4 +1,21 @@
 .card {
   background: #56679f;
   color: #FFF;
+  padding: 0;
+  .card-body {
+    padding: 0;
+    p {
+      margin: 0;
+      padding: 0;
+      button, strong {
+        font-size: 3rem;
+        background: #56679F;
+        border: none;
+        color: #FFF;
+        height: 80px;
+        margin: 0;
+        display: inline-block;
+      }
+    }
+  }
 }

@@ -3,10 +3,10 @@
     <div class="card">
       <div class="card-body text-center">
         <p *ngIf="!col.hidden || DEBUG_MODE"><strong>{{ col.value }}</strong></p>
-        <button *ngIf="col.hidden" type="button" id="number-grid-btn-{{ col.value }}"
+        <p *ngIf="col.hidden"><button type="button" id="number-grid-btn-{{ col.value }}"
           [disabled]="col.disabled"
           (click)="trackSequence(col, $event)"
-          class="btn btn-lg btn-block btn-primary">&nbsp;</button>
+          class="btn btn-lg btn-block btn-primary" >&nbsp;</button></p>
       </div>
     </div>
   </div>

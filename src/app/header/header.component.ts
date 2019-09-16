@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.message$ = this._messages.getCurrentMessage();
-    this.currentLevel$ = this._levels.getCurrentLevel();
+    this.currentLevel$ = this._levels.getCurrentLevelIndex();
     this.livesRemaining$ = this._lives.getNumLives();
     this.timeRemainingMs$ = this._timer.getTimeRemaining();
   }

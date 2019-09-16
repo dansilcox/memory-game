@@ -9,7 +9,7 @@ import { UserLivesService } from './user-lives.service';
 })
 export class NumbersService {
   // Cheat mode - doesn't hide the numbers :D
-  private readonly DEBUG_MODE = true;
+  private readonly DEBUG_MODE = false;
 
   private userSequence: NumberGridItem[];
   private correctSequence: NumberGridItem[];
