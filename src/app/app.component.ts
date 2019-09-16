@@ -21,10 +21,11 @@ export class AppComponent implements OnInit {
   showRetryBtn = false;
   showStartBtn = false;
   showRestartBtn = false;
+
+  username: string = 'CHIMP';
   
   private timeRemainingMs$: Observable<number>;
   private levelConfig: LevelConfig;
-  private currentScore$: Observable<number>;
 
   nextLevel: number = 1;
 
@@ -57,7 +58,6 @@ export class AppComponent implements OnInit {
       })
     ).subscribe();
     this.timeRemainingMs$ = this._timer.getTimeRemaining();
-    this.currentScore$ = this._scores.getCurrentScore();
 
     this._numbers.getStatus().pipe(
       map((status: NumberStatus) => {
@@ -111,6 +111,10 @@ export class AppComponent implements OnInit {
   restart(): void {
     // TODO: improve this
     window.location.reload();
+  }
+
+  setName(name: string): void {
+    this.username = name;
   }
   
   private passedLevel(): void {

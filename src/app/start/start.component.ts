@@ -8,6 +8,11 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class StartComponent implements OnInit {
 
+  name = '';
+
+  @Output()
+  nameEvent = new EventEmitter<string>();
+
   @Output()
   modalClosed = new EventEmitter<boolean>();
 
@@ -23,11 +28,16 @@ export class StartComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then(() => {
-      this.modalClosed.emit(true);
+    // We don't care _how_ the modal is closed, we are starting the game anyway!!
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((saved) => {
+      this.start();
     }, () => {
-      this.modalClosed.emit(true);
+      this.start();
     });
   }
 
+  private start() {
+    this.modalClosed.emit(true);
+    this.nameEvent.emit(this.name);
+  }
 }

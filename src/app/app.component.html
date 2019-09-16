@@ -1,5 +1,5 @@
 <div class="container">
-  <app-header [title]="title"></app-header>
+  <app-header [title]="title" [username]="username"></app-header>
   
   <app-number-grid></app-number-grid>
 
@@ -17,4 +17,4 @@
     (click)="startGame(true, true)">Advance to level {{ nextLevel }}</button></p>
 </div>
 
-<app-start (modalClosed)="startGame(false, true)"></app-start>
+<app-start (modalClosed)="startGame(false, true)" (nameEvent)="setName($event)"></app-start>

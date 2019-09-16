@@ -12,6 +12,7 @@ import { UserLivesService } from './services/user-lives.service';
 import { NumberGridComponent } from './number-grid/number-grid.component';
 import { MessageTypeToClassPipe } from './message-type-to-class.pipe';
 import { ScoringService } from './services/scoring.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { ScoringService } from './services/scoring.service';
     MessageTypeToClassPipe
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     NgbModule
   ],

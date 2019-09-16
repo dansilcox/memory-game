@@ -16,6 +16,9 @@ import { tap } from 'rxjs/operators';
 export class HeaderComponent implements OnInit {
 
   @Input()
+  username: string;
+
+  @Input()
   title: string;
   
   currentLevel$: Observable<number>;

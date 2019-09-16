@@ -10,6 +10,14 @@
       </ul>
     </div>
     <div class="text-center">
+      <div class="form-group">
+        <label for="name">Your name (optional)</label>
+        <input type="text" [(ngModel)]="name" maxlength="5"
+          class="form-control" id="name" aria-describedby="nameHelp"
+          placeholder="A short name for yourself - 5 characters or less!">
+        <small id="nameHelp" class="form-text text-muted">This will be publicly visible - keep it PII-free!</small>
+      </div>
+
       <button type="button" 
         class="btn btn-success btn-lg btn-block" 
         aria-label="Start"
