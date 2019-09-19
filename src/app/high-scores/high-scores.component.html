@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col">
+    <h4>High scores!</h4>
+    <div *ngIf="highScores$ | async as highScores; else loading">
+      <ul *ngIf="highScores && highScores.length > 0; else noScoresYet">
+        <li class="list-item" *ngFor="let score of highScores">
+          <strong>{{ score.name }}:</strong>
+          {{ score.score }}
+        </li>
+      </ul>
+    </div>
+
+    <ng-template #noScoresYet>
+      <p>No high scores yet...</p>
+    </ng-template>
+
+    <ng-template #loading>
+      <p>Loading...</p>
+    </ng-template>
+  </div>
+</div>

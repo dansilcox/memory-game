@@ -8,11 +8,15 @@ import { TimerService } from './services/timer.service';
 import { LevelConfigService } from './services/level-config.service';
 import { NumbersService } from './services/numbers.service';
 import { MessagesService } from './services/messages.service';
-import { UserLivesService } from './services/user-lives.service';
+import { UserService } from './services/user.service';
 import { NumberGridComponent } from './number-grid/number-grid.component';
 import { MessageTypeToClassPipe } from './message-type-to-class.pipe';
 import { ScoringService } from './services/scoring.service';
 import { FormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
+import { HighScoresComponent } from './high-scores/high-scores.component';
+import { MainGameComponent } from './main-game/main-game.component';
+import { GameHeaderComponent } from './game-header/game-header.component';
 
 @NgModule({
   declarations: [
@@ -20,12 +24,16 @@ import { FormsModule } from '@angular/forms';
     HeaderComponent,
     StartComponent,
     NumberGridComponent,
-    MessageTypeToClassPipe
+    MessageTypeToClassPipe,
+    HighScoresComponent,
+    MainGameComponent,
+    GameHeaderComponent
   ],
   imports: [
     FormsModule,
     BrowserModule,
-    NgbModule
+    NgbModule,
+    AppRoutingModule
   ],
   providers: [
     TimerService,
@@ -33,7 +41,7 @@ import { FormsModule } from '@angular/forms';
     NumbersService,
     MessagesService,
     ScoringService,
-    UserLivesService
+    UserService
   ],
   bootstrap: [AppComponent]
 })

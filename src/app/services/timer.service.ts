@@ -7,6 +7,8 @@ import {Observable, Subject} from 'rxjs';
 export class TimerService {
 
   private timeRemainingMs$ = new Subject<number>();
+  
+  private interval;
 
   constructor() { }
 
@@ -15,13 +17,17 @@ export class TimerService {
 
     let timeRemainingMs = allowedTimeMs;
 
-    let interval = setInterval(() => {
+    this.interval = setInterval(() => {
       timeRemainingMs -= intervalMs * 5; // Calibrate the timer to match with real time
       this.timeRemainingMs$.next(timeRemainingMs);
       if (timeRemainingMs === 0) {
-        clearInterval(interval);
+        this.clear();
       }
     }, intervalMs);
+  }
+
+  clear(): void {
+    clearInterval(this.interval);
   }
 
   getTimeRemaining(): Observable<number> {

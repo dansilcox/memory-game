@@ -40,6 +40,12 @@ export class LevelConfigService {
   private currentLevelIndex = 1;
   private currentLevelIndex$ = new BehaviorSubject<number>(1);
 
+  startAgain(): void {
+    this.currentLevelIndex = 1;
+    this.currentLevelIndex$.next(this.currentLevelIndex);
+    this.currentLevel$.next(this.allLevels[this.currentLevelIndex]);
+  }
+  
   getAllLevels(): Observable<LevelConfig[]> {
     return of(this.allLevels);
   }
@@ -52,16 +58,19 @@ export class LevelConfigService {
     return this.currentLevelIndex$;
   }
 
+  isLastLevel(): boolean {
+    return this.allLevels.length <= this.currentLevelIndex;
+  }
+
   nextLevel(): void {
     // TODO: improve this error handling :D (issue https://github.com/dansilcox/memory-game/issues/9)
-    if (this.allLevels.length <= this.currentLevelIndex) {
-      console.info('You have reached the end!!!');
-      throw new Error('Entire game defeated!');
+    if (this.isLastLevel()) {
+      console.info('Congratulations! You have reached the end!!!');
+      throw new Error('Entire game defeated! :) Happy error I guess??');
     }
 
     this.currentLevelIndex++;
     this.currentLevelIndex$.next(this.currentLevelIndex);
-    console.log('Start of level ' + (this.currentLevelIndex + 1));
     this.currentLevel$.next(this.allLevels[this.currentLevelIndex]);
   }
 }

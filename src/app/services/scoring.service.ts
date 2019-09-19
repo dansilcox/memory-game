@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { FinalScore } from '../models/final-score';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ScoringService {
-  private scoresOnTheDoors: FinalScore[] = [];
+  private highScores: FinalScore[] = [];
   private currentScore = 0;
   private currentScore$ = new BehaviorSubject<number>(this.currentScore);
 
@@ -26,18 +26,37 @@ export class ScoringService {
    * @return The new score
    */
   incrementScore(incrementValue: number): number {
+    console.log(this.currentScore);
     this.currentScore += incrementValue;
+    console.log(this.currentScore);
     this.currentScore$.next(this.currentScore);
     return this.currentScore;
   }
 
+  resetCurrent(): void {
+    console.log(this.currentScore);
+    this.currentScore = 0;
+    console.log(this.currentScore);
+    this.currentScore$.next(this.currentScore);
+  }
+  
+  saveCurrentScore(name: string): void {    
+    this.saveScore(this.currentScore, name);
+  }
+  
   saveScore(score: number, name: string): void {
-    this.scoresOnTheDoors.push(new FinalScore(score, name));
+    if (score <= 0) {
+      console.error('Not saving score of ' + score + ' for user ' + name + ' as it is <= 0');
+      return;
+    }
+
+    console.debug('Saving score of ' + score + ' for user ' + name);
+    this.highScores.push(new FinalScore(score, name));
   }
 
-  getScoresOnTheDoors(): FinalScore[] {
-    return this.scoresOnTheDoors.sort((a: FinalScore, b: FinalScore) => {
+  getHighScores(): Observable<FinalScore[]> {
+    return of(this.highScores.sort((a: FinalScore, b: FinalScore) => {
       return a.score > b.score ? 1 : -1;
-    });
+    }));
   }
 }
