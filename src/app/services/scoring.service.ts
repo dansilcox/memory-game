@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { FinalScore } from '../models/final-score';
+import { HighScoresService } from './high-scores.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ScoringService {
-  private highScores: FinalScore[] = [];
   private currentScore = 0;
   private currentScore$ = new BehaviorSubject<number>(this.currentScore);
 
-  constructor() { }
+  constructor(private _highScores: HighScoresService) { }
 
   /**
    * Get the current score
@@ -51,12 +51,6 @@ export class ScoringService {
     }
 
     console.debug('Saving score of ' + score + ' for user ' + name);
-    this.highScores.push(new FinalScore(score, name));
-  }
-
-  getHighScores(): Observable<FinalScore[]> {
-    return of(this.highScores.sort((a: FinalScore, b: FinalScore) => {
-      return a.score > b.score ? 1 : -1;
-    }));
+    this._highScores.save(new FinalScore(score, name));
   }
 }

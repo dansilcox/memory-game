@@ -18,6 +18,7 @@ import { HighScoresComponent } from './high-scores/high-scores.component';
 import { MainGameComponent } from './main-game/main-game.component';
 import { GameHeaderComponent } from './game-header/game-header.component';
 import { IpcRendererService } from './services/ipc-renderer.service';
+import { HighScoresService } from './services/high-scores.service';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { IpcRendererService } from './services/ipc-renderer.service';
     LevelConfigService,
     NumbersService,
     MessagesService,
+    HighScoresService,
     ScoringService,
     UserService,
     IpcRendererService

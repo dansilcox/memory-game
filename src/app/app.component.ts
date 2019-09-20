@@ -10,7 +10,7 @@ export class AppComponent {
   title = 'Memory Game';
   constructor(private _ipc: IpcRendererService) {
     this._ipc.on('pong', (event: Electron.IpcMessageEvent) => {
-      console.log('pong');
+      console.log('Electron IPC connection up and running!');
     });
 
     this._ipc.send('ping');

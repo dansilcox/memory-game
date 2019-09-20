@@ -4,6 +4,7 @@
   "main": "main.js",
   "scripts": {
     "ng": "ng",
+    "db-migrate": "node node_modules/db-migrate/bin/db-migrate",
     "electron": "ng build --base-href ./ && electron .",
     "start": "ng serve",
     "build": "ng build",
@@ -24,7 +25,10 @@
     "@ng-bootstrap/ng-bootstrap": "^5.1.1",
     "@types/electron": "^1.6.10",
     "bootstrap": "^4.3.1",
+    "db-migrate": "^0.11.6",
+    "db-migrate-sqlite3": "^0.4.0",
     "rxjs": "~6.4.0",
+    "sqlite3": "^4.1.0",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
   },
@@ -38,6 +42,7 @@
     "@types/node": "~8.9.4",
     "codelyzer": "^5.0.0",
     "electron": "^6.0.7",
+    "electron-rebuild": "^1.8.6",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.1.0",
