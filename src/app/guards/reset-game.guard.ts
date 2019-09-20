@@ -28,6 +28,11 @@ export class ResetGameGuard implements CanDeactivate<MainGameComponent> {
     currentState: RouterStateSnapshot,
     nextState: RouterStateSnapshot
   ): boolean {
+    // TODO: make this prettier...
+    if (!confirm('Navigating away will reset the game - continue?')) {
+      return false;
+    }
+
     this._msg.send('Resetting game...', MessageType.WARNING);
     this._level.startAgain();
     this._numbers.reset();

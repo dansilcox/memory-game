@@ -37,13 +37,8 @@ export class GameHeaderComponent implements OnInit {
     this.timeRemainingMs$ = this._timer.getTimeRemaining();
     this.currentScore$ = this._scores.getCurrentScore().pipe(
       tap((score: number) => {
-        // TODO: fix this logic
-        if (score > 1000) {
-          this.isHighScore = true;
-        }
-        if (score > 10000) {
-          this.isNewRecord = true;
-        }
+        this.isHighScore = this._scores.isHighScore(score);
+        this.isNewRecord = this._scores.isNewRecord(score);
         return score;
       })
     );

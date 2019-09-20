@@ -43,6 +43,6 @@ export class StartComponent implements OnInit {
 
   private start() {
     this.modalClosed.emit(true);
-    this.nameEvent.emit(this.name);
+    this.nameEvent.emit(this.name.toLocaleUpperCase().trim());
   }
 }

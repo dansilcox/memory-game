@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { FinalScore } from '../models/final-score';
-import { Observable, of, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { IpcRendererService } from './ipc-renderer.service';
 import { IpcMessageEvent } from 'electron';
+
+const MAX_HIGH_SCORES = 10;
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +15,7 @@ export class HighScoresService {
 
   constructor(private _ipc: IpcRendererService) {
     this._ipc.on('high_scores_updated', (event: IpcMessageEvent, data: any) => {
-      console.log(event);
-      console.log(data);
       this.highScores = data;
-      console.log('high scores updated - new list received...');
-      console.log(data);
       this.highScores$.next(this.highScores);
     })
    }
@@ -29,5 +27,19 @@ export class HighScoresService {
 
   getHighScores(): Observable<FinalScore[]> {
     return this.highScores$.asObservable();
+  }
+
+  isHighScore(score: number) {
+    // If we've filled the quota of high scores, only allow us to add it 
+    // if it's bigger than the bottom high score
+    if (this.highScores.length >= MAX_HIGH_SCORES) {
+      return this.highScores[MAX_HIGH_SCORES - 1].score < score;
+    }
+
+    return true;
+  }
+
+  isNewRecord(score: number) {
+    return this.highScores[0].score < score;
   }
 }

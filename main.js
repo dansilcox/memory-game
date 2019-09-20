@@ -12,7 +12,6 @@ function sendHighScores(event = null) {
     if (err) {
       console.error(err);
     }
-    console.log(data);
     if (event) {
       event.sender.send('high_scores_updated', data);
     }
@@ -28,8 +27,6 @@ ipcMain.once('ping', (event) => {
 });
 
 ipcMain.on('save_high_score', (event, highScore) => {
-  console.log('save_high_score');
-  console.log(highScore);
   const stmt = db.prepare("INSERT INTO high_scores(name, score) VALUES ($1, $2)");
   stmt.run(highScore.name, highScore.score);
   stmt.finalize();

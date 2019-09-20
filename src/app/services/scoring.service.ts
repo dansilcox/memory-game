@@ -53,4 +53,12 @@ export class ScoringService {
     console.debug('Saving score of ' + score + ' for user ' + name);
     this._highScores.save(new FinalScore(score, name));
   }
+
+  isHighScore(score: number) {
+    return this._highScores.isHighScore(score);
+  }
+
+  isNewRecord(score: number) {
+    return this._highScores.isNewRecord(score);
+  }
 }
