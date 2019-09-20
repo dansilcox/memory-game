@@ -1,11 +1,21 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const url = require("url");
+
+ipcMain.on('ping', (event) => {
+  event.sender.send('pong');
+});
 
 let win;
 
 function createWindow() {
-  win = new BrowserWindow({ width: 800, height: 600 });
+  win = new BrowserWindow({ 
+    width: 800, 
+    height: 600,
+    webPreferences: {
+      preload: __dirname + '/preload.js'
+    }
+  });
 
   // load the dist folder from Angular
   win.loadURL(

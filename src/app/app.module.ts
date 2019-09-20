@@ -17,6 +17,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HighScoresComponent } from './high-scores/high-scores.component';
 import { MainGameComponent } from './main-game/main-game.component';
 import { GameHeaderComponent } from './game-header/game-header.component';
+import { IpcRendererService } from './services/ipc-renderer.service';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { GameHeaderComponent } from './game-header/game-header.component';
     NumbersService,
     MessagesService,
     ScoringService,
-    UserService
+    UserService,
+    IpcRendererService
   ],
   bootstrap: [AppComponent]
 })
