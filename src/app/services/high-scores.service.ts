@@ -29,7 +29,11 @@ export class HighScoresService {
     return this.highScores$.asObservable();
   }
 
-  isHighScore(score: number) {
+  isHighScore(score: number): boolean {
+    if (score === 0) {
+      return false;
+    }
+
     // If we've filled the quota of high scores, only allow us to add it 
     // if it's bigger than the bottom high score
     if (this.highScores.length >= MAX_HIGH_SCORES) {
@@ -39,7 +43,11 @@ export class HighScoresService {
     return true;
   }
 
-  isNewRecord(score: number) {
+  isNewRecord(score: number): boolean {
+    if (score === 0) {
+      return false;
+    }
+
     return this.highScores[0].score < score;
   }
 }
