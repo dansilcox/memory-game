@@ -15,4 +15,4 @@
   class="btn btn-large btn-success"
   (click)="startGame(true, true)">Advance to level {{ nextLevel }}</button></p>
 
-<app-start (modalClosed)="startGame(false, true)" (nameEvent)="setName($event)"></app-start>
+<app-start [openInitially]="!started" (modalClosed)="startGame(false, true)" (nameEvent)="setName($event)"></app-start>

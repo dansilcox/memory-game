@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MessagesService } from '../services/messages.service';
 import { LevelConfigService } from '../services/level-config.service';
 import { UserService } from '../services/user.service';
 import { TimerService } from '../services/timer.service';
@@ -25,7 +24,6 @@ export class GameHeaderComponent implements OnInit {
   message$: Observable<Message>;
   
   constructor(
-    private _messages: MessagesService,
     private _levels: LevelConfigService,
     private _user: UserService,
     private _timer: TimerService,
@@ -34,7 +32,6 @@ export class GameHeaderComponent implements OnInit {
 
   ngOnInit() {
     this.username$ = this._user.getName();
-    this.message$ = this._messages.getCurrentMessage();
     this.currentLevel$ = this._levels.getCurrentLevelIndex();
     this.livesRemaining$ = this._user.getNumLives();
     this.timeRemainingMs$ = this._timer.getTimeRemaining();

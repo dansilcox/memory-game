@@ -4,8 +4,7 @@
   </div>
 
   <div class="col text-center">
-    <p>Time remaining: {{ (timeRemainingMs$ | async) / 1000 }} seconds</p>
-    <div *ngIf="message$ | async as message" class="alert alert-{{ message.type | messageTypeToClass }}">{{ message.text }}</div>
+    <p id="time-remaining">Time remaining: {{ (timeRemainingMs$ | async) / 1000 }} seconds</p>
   </div>
 
   <div class="col text-right">

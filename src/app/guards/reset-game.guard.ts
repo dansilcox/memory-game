@@ -6,6 +6,8 @@ import { NumbersService } from '../services/numbers.service';
 import { ScoringService } from '../services/scoring.service';
 import { LevelConfigService } from '../services/level-config.service';
 import { UserService } from '../services/user.service';
+import { MessagesService } from '../services/messages.service';
+import { MessageType } from '../message-type';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,8 @@ export class ResetGameGuard implements CanDeactivate<MainGameComponent> {
     private _user: UserService,
     private _level: LevelConfigService,
     private _numbers: NumbersService,
-    private _scores: ScoringService) {
+    private _scores: ScoringService,
+    private _msg: MessagesService) {
   }
 
   canDeactivate(
@@ -25,7 +28,7 @@ export class ResetGameGuard implements CanDeactivate<MainGameComponent> {
     currentState: RouterStateSnapshot,
     nextState: RouterStateSnapshot
   ): boolean {
-    console.log('Resetting game...');
+    this._msg.send('Resetting game...', MessageType.WARNING);
     this._level.startAgain();
     this._numbers.reset();
     this._scores.resetCurrent();

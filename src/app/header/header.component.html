@@ -1,19 +1,19 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">{{ title }}</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse"
-    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
-    aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+  <a class="navbar-brand" [routerLink]="'/'">{{ title }}</a>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" [routerLink]="'/game'">Play the game</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="'/high-scores'">High scores</a>
-      </li>
-    </ul>
-  </div>
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item active">
+      <a class="nav-link" [routerLink]="'/game'">Play the game</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" *ngIf="gameInProgress">High scores</a>
+      <a class="nav-link" *ngIf="!gameInProgress" [routerLink]="'/high-scores'">High scores</a>
+    </li>
+  </ul>
 </nav>
+
+<div class="row justify-content-sm-center" *ngIf="message$ | async as message">
+  <div class="col-6-sm text-center">
+    <div class="alert alert-{{ message.type | messageTypeToClass }}">{{ message.text }}</div>
+  </div>
+</div>

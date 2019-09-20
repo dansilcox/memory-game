@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, TemplateRef, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -7,6 +7,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./start.component.scss']
 })
 export class StartComponent implements OnInit {
+
+  @Input()
+  openInitially = true;
 
   name = '';
 
@@ -24,7 +27,9 @@ export class StartComponent implements OnInit {
   constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
-    this.open(this.content);
+    if (this.openInitially) {
+      this.open(this.content);
+    }
   }
 
   open(content) {

@@ -1,10 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { TimerService } from '../services/timer.service';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, takeUntil } from 'rxjs/operators';
 import { LevelConfigService } from '../services/level-config.service';
 import { LevelConfig } from '../level-config';
 import { NumbersService } from '../services/numbers.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription, Subject } from 'rxjs';
 import { NumberStatus } from '../number-status';
 import { UserService } from '../services/user.service';
 import { MessagesService } from '../services/messages.service';
@@ -16,15 +16,16 @@ import { ScoringService } from '../services/scoring.service';
   templateUrl: './main-game.component.html',
   styleUrls: ['./main-game.component.scss']
 })
-export class MainGameComponent implements OnInit {
+export class MainGameComponent implements OnInit, OnDestroy {
   showRetryBtn = false;
   showStartBtn = false;
   showRestartBtn = false;
+  nextLevel: number = 1;
+  started = false;
   
   private timeRemainingMs$: Observable<number>;
   private levelConfig: LevelConfig;
-
-  nextLevel: number = 1;
+  private unsubscribe: Subject<void> = new Subject();
 
   constructor(
     private _timer: TimerService,
@@ -46,13 +47,15 @@ export class MainGameComponent implements OnInit {
         this.showRetryBtn = false;
         this.showStartBtn = false;
         this.showRestartBtn = false;
-      })
+      }),
+      takeUntil(this.unsubscribe)
     ).subscribe();
 
     this._levels.getCurrentLevelIndex().pipe(
       tap((currentLevel: number) => {
         this.nextLevel = currentLevel + 1;
-      })
+      }),
+      takeUntil(this.unsubscribe)
     ).subscribe();
     this.timeRemainingMs$ = this._timer.getTimeRemaining();
 
@@ -72,8 +75,14 @@ export class MainGameComponent implements OnInit {
             break;
         }
         return status;
-      })
+      }),
+      takeUntil(this.unsubscribe)
     ).subscribe();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 
   startGame(increaseLevel: boolean = false, randomiseNumbers = true): void {
@@ -98,7 +107,8 @@ export class MainGameComponent implements OnInit {
         if (remainingMs < 1) {
           this._numbers.hideAll();
         }
-      })
+      }),
+      takeUntil(this.unsubscribe)
     ).subscribe();
   }
 
