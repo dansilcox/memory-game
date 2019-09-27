@@ -2,6 +2,8 @@ const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const url = require("url");
 const sqlite3 = require('sqlite3').verbose();
+
+
 // TODO configure from database.json
 const db = new sqlite3.Database(__dirname + '/dev.db');
 

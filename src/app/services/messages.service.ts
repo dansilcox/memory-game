@@ -13,7 +13,6 @@ export class MessagesService {
   constructor() { }
 
   send(message: string, type: MessageType): void {
-    console.log(message);
     this.currentMessage$.next(new Message(message,type));
   }
 

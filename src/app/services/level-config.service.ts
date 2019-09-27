@@ -7,21 +7,21 @@ const ALL_LEVELS = [
   new LevelConfig(2500, 4),
   new LevelConfig(2000, 4),
   new LevelConfig(1500, 4),
-  new LevelConfig(1000, 4, 1, "Wow, you're doing great! Time to size up the grid!", 1),
+  new LevelConfig(1000, 4, 1, "Wow, you're doing great! Points bonus! Time to size up the grid!", 1, 2000),
   new LevelConfig(10000, 9),
   new LevelConfig(9000, 9),
   new LevelConfig(8000, 9),
-  new LevelConfig(7000, 9, 1, "Nice going! Keep it up, here comes the next one", 1),
+  new LevelConfig(7000, 9, 1, "Nice going! Points bonus! Keep it up, here comes the next one", 1, 2000),
   new LevelConfig(6000, 9),
   new LevelConfig(5000, 9),
   new LevelConfig(4000, 9),
   new LevelConfig(3000, 9),
   new LevelConfig(2000, 9),
-  new LevelConfig(1000, 9, 1, "You are on FIRE! Sizing up the grid again...", 2),
+  new LevelConfig(1000, 9, 1, "You are on FIRE! Major points bonus! Sizing up the grid again...", 2, 5000),
   new LevelConfig(10000, 16),
   new LevelConfig(9000, 16),
   new LevelConfig(8000, 16),
-  new LevelConfig(7000, 16, 1, "Unbelievable! This is stunning stuff!", 3),
+  new LevelConfig(7000, 16, 1, "Unbelievable! Major points bonus! This is stunning stuff!", 3, 5000),
   new LevelConfig(6000, 16),
   new LevelConfig(5000, 16),
   new LevelConfig(4000, 16),
@@ -43,7 +43,7 @@ export class LevelConfigService {
   startAgain(): void {
     this.currentLevelIndex = 1;
     this.currentLevelIndex$.next(this.currentLevelIndex);
-    this.currentLevel$.next(this.allLevels[this.currentLevelIndex]);
+    this.currentLevel$.next(this.allLevels[this.currentLevelIndex - 1]);
   }
   
   getAllLevels(): Observable<LevelConfig[]> {
@@ -59,7 +59,7 @@ export class LevelConfigService {
   }
 
   isLastLevel(): boolean {
-    return this.allLevels.length <= this.currentLevelIndex;
+    return this.allLevels.length < this.currentLevelIndex;
   }
 
   nextLevel(): void {
@@ -71,6 +71,6 @@ export class LevelConfigService {
 
     this.currentLevelIndex++;
     this.currentLevelIndex$.next(this.currentLevelIndex);
-    this.currentLevel$.next(this.allLevels[this.currentLevelIndex]);
+    this.currentLevel$.next(this.allLevels[this.currentLevelIndex - 1]);
   }
 }

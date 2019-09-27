@@ -12,7 +12,7 @@
   </ul>
 </nav>
 
-<div class="row justify-content-sm-center" *ngIf="message$ | async as message">
+<div class="row justify-content-sm-center mt-3" *ngIf="message$ | async as message">
   <div class="col-6-sm text-center">
     <div class="alert alert-{{ message.type | messageTypeToClass }}">{{ message.text }}</div>
   </div>

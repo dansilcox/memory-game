@@ -99,7 +99,6 @@ export class NumbersService {
     }
 
     if (this.userSequence.length === this.correctSequence.length) {
-      console.log('Setting status to PASSED LEVEL');
       // at the end
       this.status$.next(NumberStatus.PASSED_LEVEL);
       return true;

@@ -5,7 +5,8 @@
   "scripts": {
     "ng": "ng",
     "db-migrate": "node node_modules/db-migrate/bin/db-migrate",
-    "electron": "ng build --base-href ./ && electron .",
+    "electron": "ng build --prod --base-href ./ && electron .",
+    "electron-no-build": "electron .",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
